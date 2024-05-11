@@ -30,6 +30,22 @@ graph
 
 ```
 
+### Directory Structure
+
+client (whole app)
+
+1. app (NextJS 14.x App Router Structure)
+   1. \_components (common use react components)
+   2. \_serveractions (server-sde server actions (API-esque))
+   3. \_web3 (providers & configs for wagmi, tanstack, rainbow, nextauth)
+   4. api (routes to APIs - only used for nextauth in the boilerplate)
+   5. (routes) (a logical grouping via directory for routes)
+2. db (DrizzleORM databse definition, operations, and migrations)
+   1. operations (ORM-tied CRUD functions)
+   2. output (migration scripts generated from npm run generate)
+   3. schema (table defintions)
+   4. types (typescript definitions in a single place)
+
 ### Getting Started
 
 This is designed for Vercel Hosting, with Vercel PostgresDB. You can subsitute

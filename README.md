@@ -3,7 +3,65 @@
 Boilerplate for Web 3 applications with NextAuth and SIWE integration for
 session based authentication and off-chain operations (wallet as IDP)
 
+## How does it all hang together?
+
+We're essentailly using SIWE as an Identity Provider, wrapping standard SIWE
+functionality in the NextAuth suite. This enables us to verify a user and
+establish a session/JWT token for secure user operations in an off-chain
+application. Super useful for gaming products or where you might want to token
+gate a more Web 2.0 style site.
+
+The site is designed to use the built in NextJS and NextAuth SSR flows and
+validation, allowing you to protect pages and content by skimming the token from
+cookies to ensure they are logged in. This can be extended to include balance
+checks, tokens held, etc.
+
+```mermaid
+graph
+0[Connect Wallet] --> 1[RainbowKit UI]
+1 --> 2[RainbowKit SIWE Library]
+2 --> 3[User SIWE Message Presented]
+3 -- User Declines --> 5[Connection Rejected]
+3 -- User Signs--> 4[NextAuth Session Flow]
+4 --> 6[Authorize called & SIWE message validated]
+6 -- Fails --> 7[Connection Rejected]
+6 -- Passes --> 8[JWT & Session Generated]
+8 -- Site operations --> 9[NextJS Server-side Validation of Session Token]
+8 -- Wallet changes --> 10[Session Dropped]
+
+```
+
 ## Getting Started
+
+This is designed for Vercel Hosting, with Vercel PostgresDB. You can subsitute
+the PostgresDB layer to local instances with ease or just rip out the
+drizzle-ORM and use your own model.
+
+The diagram looks nuts but essentially...
+
+### VERCEL
+
+1. Clone the repo
+2. Stand it up on Vercel and attach a PostgresDB database
+3. Run the client/db/output migration SQL against your db
+4. Update the environment variables as needed in the App Settings
+5. Configure the build based on a branch (i.e. main but develop in dev and PR to
+   push changes to Vercel, etc)
+
+### Local
+
+1. Clone the repo
+2. Copy the .env.sample to a new .env
+3. Fill in everything
+   1. Get your Vercel PostgresDB details
+   2. or, use a local instance if you have one (this is better so that vercel
+      and local aren't sharing a schema/data)
+4. Run the client/db/output migration SQL against your db
+5. cd client
+6. npm install
+7. npm run dev
+8. Configure the build based on a branch (i.e. main but develop in dev and PR to
+   push changes to Vercel, etc)
 
 ```mermaid
 graph TB

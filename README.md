@@ -1,8 +1,19 @@
 # NextJS 14.x (App Router) Template for Magma, Base & Ethereum Builders
 
-## Includes: TailwindCSS, DaisyUI, Sign-in with Ethereum, NextAuth, wagmi.sh, DrizzleORM and RainbowKit Wallet Integration
+## Front-end (client/\*)
 
-### How does it all hang together?
+TailwindCSS, DaisyUI, Sign-in with Ethereum, NextAuth, wagmi.sh, DrizzleORM and RainbowKit Wallet Integration
+
+## Smart Contracts (hardhat/\*)
+
+Vanilla hardhat example, with simple ERC20 token, and extended to sync the ABI to the client/app/\_abi/ directory on compile:
+
+```
+cd hardhat
+npx hardhat compile
+```
+
+## How does it all hang together?
 
 We're essentailly using SIWE as an Identity Provider, wrapping standard SIWE
 functionality in the NextAuth suite. This enables us to verify a user and
@@ -30,7 +41,7 @@ graph
 
 ```
 
-### Directory Structure
+### Front-end Directory Structure
 
 client (whole app)
 
@@ -46,7 +57,7 @@ client (whole app)
    3. schema (table defintions)
    4. types (typescript definitions in a single place)
 
-### Getting Started
+### Getting Started (Front-end)
 
 This is designed for Vercel Hosting, with Vercel PostgresDB. You can subsitute
 the PostgresDB layer to local instances with ease or just rip out the
@@ -54,7 +65,7 @@ drizzle-ORM and use your own model.
 
 The diagram looks nuts but essentially...
 
-#### Vercel
+#### Vercel Hosted
 
 1. Clone the repo
 2. Stand it up on Vercel and attach a PostgresDB database
@@ -63,7 +74,7 @@ The diagram looks nuts but essentially...
 5. Configure the build based on a branch (i.e. main but develop in dev and PR to
    push changes to Vercel, etc)
 
-#### Local
+#### Local Development / Hosting
 
 1. Clone the repo
 2. Copy the .env.sample to a new .env

@@ -24,6 +24,14 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         try {
           const siwe = new SiweMessage(JSON.parse(credentials?.message || '{}'))
+          
+          // This can be problematic when not local (i.e. TST/PRD)
+          // I've experienced it working andnot working when setting the NEXTAUTH_URL manually in Env Variables
+          // If you experience issues, you can...
+          // 1. Manually override it and provide the string literal
+          // 2. Use a case switch and a bit flag that feeds from a non-reserved variable when not local (i.e. DEV_MODE=0)
+          // 3. Fiddle around with Vercel until it works
+          
           const nextAuthUrl = new URL(process.env.NEXTAUTH_URL as string)
 
           const result = await siwe.verify({

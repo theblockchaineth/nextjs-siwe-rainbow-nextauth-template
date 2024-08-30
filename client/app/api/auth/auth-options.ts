@@ -31,6 +31,8 @@ export const authOptions: NextAuthOptions = {
           // 1. Manually override it and provide the string literal
           // 2. Use a case switch and a bit flag that feeds from a non-reserved variable when not local (i.e. DEV_MODE=0)
           // 3. Fiddle around with Vercel until it works
+          // Related Issue(s): https://github.com/nextauthjs/next-auth/discussions/4220
+          // https://next-auth.js.org/configuration/options
           
           const nextAuthUrl = new URL(process.env.NEXTAUTH_URL as string)
 
